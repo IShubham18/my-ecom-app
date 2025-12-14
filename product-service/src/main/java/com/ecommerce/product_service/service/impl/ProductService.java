@@ -27,6 +27,7 @@ public class ProductService implements com.ecommerce.product_service.service.Pro
 
     @Override
     public Optional<Product> findById(Long id) {
+        log.info("Finding product with ID: {}", id);
         return productRepository.findById(id);
     }
 
