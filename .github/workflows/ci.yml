@@ -1,0 +1,42 @@
+name: CI for Microservices
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'product-service/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'product-service/**'
+
+jobs:
+  build-product-service:
+    name: Build Product Service
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build with Maven
+        working-directory: product-service
+        run: mvn -B package
+
+      - name: Build & Push Docker
+        uses: mr-smithers-excellent/docker-build-push@v5.3
+        with:
+          context: ./product-service
+          file: ./product-service/Dockerfile
+          image: shubham7474k/product-service
+          registry: docker.io
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
