@@ -40,6 +40,7 @@ public class ProductController {
     }
 
     @PostMapping
+    @Operation(summary = "Create Product")
     public ApiResponse<String> createProduct(@RequestBody Product product) {
         Integer id = productService.create(product);
         return ApiResponse.success("Product created with ID: " + id);
