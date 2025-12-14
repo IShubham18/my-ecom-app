@@ -38,6 +38,7 @@ public class ProductService implements com.ecommerce.product_service.service.Pro
 
     @Override
     public void delete(Long id) {
+        log.info("Deleting product with ID: {}", id);
         productRepository.deleteById(id);
     }
 
