@@ -32,9 +32,8 @@ public class ProductService implements com.ecommerce.product_service.service.Pro
 
     @Override
     public Product update(Long id, Product product) {
-
+        log.info("Updating product with ID: {}", id);
         return productRepository.save(product);
-
     }
 
     @Override
