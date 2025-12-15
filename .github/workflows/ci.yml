@@ -11,7 +11,9 @@ on:
       - main
     paths:
       - 'product-service/**'
-
+env:
+  RUN_DOCKER_PUSH: "false"    # ⬅ set to "true" to run Docker push
+  
 jobs:
   build-product-service:
     name: Build Product Service
@@ -51,6 +53,7 @@ jobs:
         run: mvn -B package
 
       - name: Build & Push Docker
+        if: ${{ env.RUN_DOCKER_PUSH == 'true' }}
         uses: mr-smithers-excellent/docker-build-push@v5.3
         with:
           image: shubham7474k/my-ecom-app
