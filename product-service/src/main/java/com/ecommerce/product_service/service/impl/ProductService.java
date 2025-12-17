@@ -27,18 +27,19 @@ public class ProductService implements com.ecommerce.product_service.service.Pro
 
     @Override
     public Optional<Product> findById(Long id) {
+        log.info("Finding product with ID: {}", id);
         return productRepository.findById(id);
     }
 
     @Override
     public Product update(Long id, Product product) {
-
+        log.info("Updating product with ID: {}", id);
         return productRepository.save(product);
-
     }
 
     @Override
     public void delete(Long id) {
+        log.info("Deleting product with ID: {}", id);
         productRepository.deleteById(id);
     }
 
