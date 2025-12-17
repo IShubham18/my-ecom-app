@@ -1,11 +1,14 @@
 package com.ecommerce.product_service.controller;
 
+import com.ecommerce.product_service.cleint.InventoryClient;
+import com.ecommerce.product_service.dto.ProductWithInventoryDto;
 import com.ecommerce.product_service.entity.Product;
 import com.ecommerce.product_service.response.ApiResponse;
 import com.ecommerce.product_service.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Map;
@@ -17,9 +20,11 @@ import java.util.Optional;
 public class ProductController {
 
     private final ProductService productService;
+    private final InventoryClient inventoryClient;
 
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, InventoryClient inventoryClient) {
         this.productService = productService;
+        this.inventoryClient = inventoryClient;
     }
 
     @GetMapping
@@ -64,5 +69,17 @@ public class ProductController {
         } catch (Exception e) {
             return ApiResponse.error("Delete failed");
         }
+    }
+
+    @GetMapping("/{id}/inventory")
+    @Operation(summary = "Get Product with Inventory Details")
+    public Mono<ProductWithInventoryDto> getProductWithInventory(@PathVariable Long id) {
+        Optional<Product> productOpt = productService.findById(id);
+        if (productOpt.isEmpty()) {
+            return Mono.error(new RuntimeException("Product not found"));
+        }
+        Product product = productOpt.get();
+        return inventoryClient.fetchInventoryByProductId(id)
+                .map(inventory -> new ProductWithInventoryDto(product, inventory));
     }
 }
