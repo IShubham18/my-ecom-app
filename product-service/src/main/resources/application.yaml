@@ -1,10 +1,38 @@
+server:
+  port: 8080
 spring:
   application:
     name: product-service
-
-
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/productdb}
     username: ${SPRING_DATASOURCE_USERNAME:postgres}
     password: ${SPRING_DATASOURCE_PASSWORD:root}
+
+management:
+  health:
+  circuit breakers:
+  enabled: true
+
+
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    health:
+      show-details: always
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      inventoryServiceCB:
+        registerHealthIndicator: true
+        slidingWindowSize: 3
+        slidingWindowType: COUNT_BASED
+        minimumNumberOfCalls: 3
+        failureRateThreshold: 50
+        waitDurationInOpenState: 5s
+
+    logging:
+      level:
+        io.github.resilience4j.circuitbreaker: DEBUG
 
