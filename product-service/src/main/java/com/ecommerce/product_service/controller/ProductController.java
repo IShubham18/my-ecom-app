@@ -7,6 +7,8 @@ import com.ecommerce.product_service.response.ApiResponse;
 import com.ecommerce.product_service.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -45,6 +47,7 @@ public class ProductController {
     }
 
     @PostMapping
+    @Operation(summary = "Create Product")
     public ApiResponse<String> createProduct(@RequestBody Product product) {
         Integer id = productService.create(product);
         return ApiResponse.success("Product created with ID: " + id);
