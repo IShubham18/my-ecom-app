@@ -95,6 +95,31 @@
 			<artifactId>resilience4j-reactor</artifactId>
 		</dependency>
 
+		<!-- Micrometer Tracing (core) -->
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-tracing</artifactId>
+		</dependency>
+
+		<!-- Brave bridge -->
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-tracing-bridge-brave</artifactId>
+		</dependency>
+
+		<!-- Zipkin reporter (optional but recommended) -->
+		<dependency>
+			<groupId>io.zipkin.reporter2</groupId>
+			<artifactId>zipkin-reporter-brave</artifactId>
+		</dependency>
+
+		<!-- Actuator (required) -->
+		<!--<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>-->
+
+
 
 	</dependencies>
 	<dependencyManagement>

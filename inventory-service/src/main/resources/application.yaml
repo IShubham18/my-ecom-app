@@ -8,3 +8,17 @@ spring:
     username: ${SPRING_DATASOURCE_USERNAME:postgres}
     password: ${SPRING_DATASOURCE_PASSWORD:root}
 
+management:
+  tracing:
+    enabled: true
+    sampling:
+      probability: 1.0   # 100% sampling for local/dev
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name},%X{traceId},%X{spanId}]"
+
+

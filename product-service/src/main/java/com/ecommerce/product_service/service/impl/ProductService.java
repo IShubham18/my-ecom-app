@@ -22,6 +22,7 @@ public class ProductService implements com.ecommerce.product_service.service.Pro
 
     @Override
     public List<Product> findAll() {
+        log.info("Finding all products");
         return productRepository.findAll();
     }
 

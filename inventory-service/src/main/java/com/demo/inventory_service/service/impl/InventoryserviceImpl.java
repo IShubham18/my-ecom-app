@@ -30,9 +30,7 @@ public class InventoryserviceImpl implements Inventoryservice {
         inventoryDto.setReserved(inventory.getReserved());
         inventoryDto.setWarehouse(inventory.getWarehouse());
 
-
-
-        log.info("Fetched inventory for product ID {}: {}", productId, inventoryDto);
+        log.info("Fetching inventory for product {}", productId);
         return inventoryDto;
     }
 }
