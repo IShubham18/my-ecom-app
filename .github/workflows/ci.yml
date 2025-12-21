@@ -6,11 +6,17 @@ on:
       - main
     paths:
       - 'product-service/**'
+      - 'inventory-service/**'
+      - 'service-registry/**'
+      - 'api-gateway/**'
   pull_request:
     branches:
       - main
     paths:
       - 'product-service/**'
+      - 'inventory-service/**'
+      - 'service-registry/**'
+      - 'api-gateway/**'
 env:
   RUN_DOCKER_PUSH: "false"    # ⬅ set to "true" to run Docker push
   
