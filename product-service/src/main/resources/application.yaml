@@ -8,6 +8,21 @@ spring:
     username: ${SPRING_DATASOURCE_USERNAME:postgres}
     password: ${SPRING_DATASOURCE_PASSWORD:root}
 
+resilience4j:
+  circuitbreaker:
+    instances:
+      inventoryServiceCB:
+        registerHealthIndicator: true
+        slidingWindowSize: 3
+        slidingWindowType: COUNT_BASED
+        minimumNumberOfCalls: 3
+        failureRateThreshold: 50
+        waitDurationInOpenState: 5s
+
+    logging:
+      level:
+        io.github.resilience4j.circuitbreaker: DEBUG
+
 management:
   health:
   circuit breakers:
@@ -23,27 +38,26 @@ management:
     enabled: true
     sampling:
       probability: 1.0   # 100% sampling for local/dev
-  zipkin:
+  otlp:
     tracing:
-      endpoint: http://localhost:9411/api/v2/spans
+      endpoint: http://localhost:4318/v1/traces
+    protocols:
+      grpc: http://0.0.0.0:4317
+      http: http://0.0.0.0:4318
 
 logging:
   pattern:
-    level: "%5p [${spring.application.name},%X{traceId},%X{spanId}]"
+    console: >
+      %d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36}
+      traceId=%X{traceId} spanId=%X{spanId} - %msg%n
+#  zipkin:
+#    tracing:
+#      endpoint: http://localhost:9411/api/v2/spans
+
+#logging:
+#  pattern:
+#    level: "%5p [${spring.application.name},%X{traceId},%X{spanId}]"
 
 
-resilience4j:
-  circuitbreaker:
-    instances:
-      inventoryServiceCB:
-        registerHealthIndicator: true
-        slidingWindowSize: 3
-        slidingWindowType: COUNT_BASED
-        minimumNumberOfCalls: 3
-        failureRateThreshold: 50
-        waitDurationInOpenState: 5s
 
-    logging:
-      level:
-        io.github.resilience4j.circuitbreaker: DEBUG
 
