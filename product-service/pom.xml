@@ -95,31 +95,17 @@
 			<artifactId>resilience4j-reactor</artifactId>
 		</dependency>
 
-		<!-- Micrometer Tracing (core) -->
+		<!-- Micrometer Tracing (OpenTelemetry bridge) -->
 		<dependency>
 			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-tracing</artifactId>
+			<artifactId>micrometer-tracing-bridge-otel</artifactId>
 		</dependency>
 
-		<!-- Brave bridge -->
+		<!-- OTLP exporter -->
 		<dependency>
-			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-tracing-bridge-brave</artifactId>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-exporter-otlp</artifactId>
 		</dependency>
-
-		<!-- Zipkin reporter (optional but recommended) -->
-		<dependency>
-			<groupId>io.zipkin.reporter2</groupId>
-			<artifactId>zipkin-reporter-brave</artifactId>
-		</dependency>
-
-		<!-- Actuator (required) -->
-		<!--<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>-->
-
-
 
 	</dependencies>
 	<dependencyManagement>

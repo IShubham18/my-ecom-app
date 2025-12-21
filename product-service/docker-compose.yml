@@ -21,3 +21,17 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://product-postgres:5432/product_db
       SPRING_DATASOURCE_USERNAME: shubham
       SPRING_DATASOURCE_PASSWORD: root
+
+  tempo:
+    image: grafana/tempo:latest
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+      - "3200:3200"   # if using Tempo query UI
+    volumes:
+      - ./tempo.yaml:/etc/tempo/tempo.yaml
+    command: [ "-config.file=/etc/tempo/tempo.yaml" ]
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"

@@ -1,0 +1,25 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:   # For gRPC (default port: 4317)
+        endpoint: "0.0.0.0:4317"
+      http:   # For HTTP (default port: 4318)
+        endpoint: "0.0.0.0:4318"
+
+processors:
+  batch: {}   # batch processor helps performance
+
+exporters:
+  logging:     # optional: prints incoming telemetry in collector logs
+    verbosity: detailed
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [logging]
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [logging]
