@@ -7,6 +7,10 @@ spring:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/inventorydb}
     username: ${SPRING_DATASOURCE_USERNAME:postgres}
     password: ${SPRING_DATASOURCE_PASSWORD:root}
+
+  config:
+    import: optional:configserver:http://localhost:8888
+
 eureka:
   instance:
     prefer-ip-address: true
